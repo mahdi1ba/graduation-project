@@ -16,3 +16,4 @@
     
   - name: remove docker images from ansible server
     command: docker rmi graduation_devops_project:latest mahdibenayed1/graduation_devops_project
+    ignore_errors: yes

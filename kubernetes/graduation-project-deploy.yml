@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-deployment
+spec:
+  selector:
+    matchLabels:
+      app: graduation-devops-project
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: graduation-devops-project
+    spec:
+      containers:
+      - name: graduation-devops-project
+        image: mahdibenayed1/graduation_devops_project
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080

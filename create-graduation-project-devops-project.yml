@@ -1,0 +1,29 @@
+---
+- hosts: all
+  connection: local
+  become: true
+  
+  tasks:
+  - name: stop if we have old docker container
+    command: docker stop graduation_devops_container
+    ignore_errors: yes
+
+  - name: remove stopped docker container
+    command: docker rm graduation_devops_container
+    ignore_errors: yes
+
+  - name: remove current docker image
+    command: docker rmi mahdibenayed1/graduation_devops_project
+    ignore_errors: yes
+    
+#  - name: build docker image using war file
+#    command: docker build -t graduation_devops_project .
+#    args:
+#      chdir: /opt/docker
+
+  - name: pull docker image from dockerhub
+    command: docker pull mahdibenayed1/graduation_devops_project
+      
+  - name: create container using simple-devops-image
+    command: docker run -d --name graduation_devops_container -p 8080:8080 mahdibenayed1/graduation_devops_project:latest
+  
